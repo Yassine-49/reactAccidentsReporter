@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Map from './Map';
 
@@ -12,4 +13,9 @@ class MapContainer extends Component{
     }
 }
 
-export default MapContainer;
+const mapStateToProps = state => {
+    return{
+    }
+}
+
+export default connect(mapStateToProps, { })(MapContainer);

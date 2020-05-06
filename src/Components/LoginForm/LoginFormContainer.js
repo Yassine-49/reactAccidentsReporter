@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './../../redux/actions/User/actions';
+import * as userActions from './../../redux/actions/User/actions';
+import * as mapActions from './../../redux/actions/Map/actions';
 
 import LoginForm from './LoginForm';
 import history from './../../Helpers/history';
@@ -17,6 +18,9 @@ class LoginFormContainer extends Component{
         const res = await this.props.loginAction(user);
         if(!res.data.message)
             history.push('/');
+
+        const response = await this.props.getDataAction(this.props.user.token);
+
         return res;
     }
 
@@ -36,7 +40,8 @@ class LoginFormContainer extends Component{
 
 const mapStateToProps = state => {
     return{
+        user: state.user,
     }
 }
 
-export default connect(mapStateToProps, {...actions})(LoginFormContainer);
+export default connect(mapStateToProps, { ...userActions, ...mapActions })(LoginFormContainer);

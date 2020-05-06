@@ -1,14 +1,23 @@
+import * as API from './../../../Helpers/Api';
+
 export const GET_DATA = 'GET_DATA';
 export const SET_CENTER = 'SET_CENTER';
 export const SET_ZOOM = 'SET_ZOOM';
 export const SET_WIDTH = 'SET_WIDTH';
 
-export const getDataAction = () => dispatch => {
-    // TODO: make the API call and return the data
-    dispatch({
-        type: GET_DATA,
-        payload: null,
-    })
+export const getDataAction = (token) => async dispatch => {
+    
+    try{
+        const res = await API.gettEntries(token);
+        await dispatch({
+            type: GET_DATA,
+            payload: res.data,
+        })
+        return res;
+    } catch(error)
+    {
+        return error;
+    }
 }
 
 export const setCenterAction = (center) => dispatch => {

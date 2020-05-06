@@ -1,3 +1,5 @@
+import * as API from './../../../Helpers/Api';
+
 export const OPEN_DIALOG = 'OPEN_DIALOG';
 export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 export const SET_DATA = 'SET_DATA';
@@ -17,6 +19,7 @@ export const closeDialogAction = () => dispatch => {
     })
 }
 
+// TODO: may be removed
 export const setDataAction = (data) => dispatch => {
     dispatch({
         type: SET_DATA,
@@ -24,10 +27,15 @@ export const setDataAction = (data) => dispatch => {
     })
 }
 
-export const postFormAction = (data) => dispatch => {
-    // TODO: make the API call and return error or success
-    dispatch({
-        type: POST_FORM,
-        payload: null,
-    })
+export const postFormAction = (data, token) => async dispatch => {
+    try {
+        const res = await API.addEntry(data, token);
+        await dispatch({
+            type: POST_FORM,
+            payload: res.data,
+        });
+        return res;
+    } catch (error) {
+        return error;
+    }
 }

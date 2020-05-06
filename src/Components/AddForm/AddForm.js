@@ -12,14 +12,19 @@ import {
 
 export default function AddForm(props)
 {
-    const open = props.open;
-    const values = props.values;
-    const setValues = () => {}
+    const [values, setValues] = React.useState({
+        title: props.values ? props.values.title : 'Enter a Title',
+        description: props.values ? props.values.description : 'Enter a Description',
+        numberOfInjuries: props.values ? props.values.numberOfInjuries : 0,
+        isResolved: props.values ? props.values.isResolved : false,
+        latitude: props.values ? props.values.latitude : null,
+        longitude: props.values ? props.values.longitude : null,
+    });
     
     return(
-        <Dialog open={open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">{props.marker ? 'Edit:' : 'Add new:'}</DialogTitle>
-            <form onSubmit={(e) => props.handleSubmit(e, values)}>
+            <form onSubmit={(e) => props.handleSaveButton(e, values)}>
                 <DialogContent>
                 <TextField
                     margin="dense"
@@ -52,13 +57,13 @@ export default function AddForm(props)
                 <FormControlLabel
                     control={
                     <Checkbox
+                        id="isResolved"
                         checked={values.isResolved}
                         name="isChecked"
                         color="secondary"
                         onChange={e => setValues({...values, isResolved: e.target.checked})}
                     />
                     }
-                    id="isResolved"
                     label="Resolved"
                 />
                 </DialogContent>
@@ -69,7 +74,7 @@ export default function AddForm(props)
                     </Button>
                     : null
                     }
-                    <Button onClick={props.handleClose} color="primary">
+                    <Button onClick={props.handleCancelButton} color="primary">
                         Cancel
                     </Button>
                     <Button type="submit" color="primary">

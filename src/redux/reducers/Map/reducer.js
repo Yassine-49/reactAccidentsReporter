@@ -1,16 +1,8 @@
 import * as actions from './../../actions/Map/actions';
 
-const initState = {
-    // map:
-    width: '100%',
-    height: '100%',
-    latitude: 32.3008,
-    longitude: -9.2272,
-    zoom: 12,
-    maxZoom: 17,
-    minZoom: 2,
+const initState = {    
     // markers:
-    data: [],
+    markers: [],
     // errors:
     errors: null,
 }
@@ -20,23 +12,24 @@ const mapReducer = (state = initState, action) => {
         case actions.GET_DATA:
             return{
                 ...state,
-                data: action.paylod,
+                markers: action.payload,
             }
+            // TODO: test what's below
         case actions.SET_CENTER:
             return{
                 ...state,
-                latitude: action.payload[1],
-                longitude: action.payload[0],
+                [state.viewport.latitude]: action.payload[1],
+                [state.viewport.longitude]: action.payload[0],
             }
         case actions.SET_ZOOM:
             return{
                 ...state,
-                zoom: action.payload,
+                [state.viewport.zoom]: action.payload,
             }
         case actions.SET_WIDTH:
             return{
                 ...state,
-                width: action.payload,
+                [state.viewport.width]: action.payload,
             }
         default:
             return state;
