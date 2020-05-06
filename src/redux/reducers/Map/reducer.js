@@ -3,6 +3,13 @@ import * as actions from './../../actions/Map/actions';
 const initState = {    
     // markers:
     markers: [],
+    // popup:
+    popup: {
+        isOpen: false,
+        id: null,
+        latitude: null,
+        longitude: null,
+    },
     // errors:
     errors: null,
 }
@@ -30,6 +37,16 @@ const mapReducer = (state = initState, action) => {
             return{
                 ...state,
                 [state.viewport.width]: action.payload,
+            }
+        case actions.SET_POPUP:
+            return{
+                ...state,
+                popup: {
+                    isOpen: action.payload.isOpen,
+                    id: action.payload.id,
+                    latitude: action.payload.lngLat[1],
+                    longitude: action.payload.lngLat[0],
+                }
             }
         default:
             return state;

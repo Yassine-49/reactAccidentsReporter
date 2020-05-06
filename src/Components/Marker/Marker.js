@@ -31,7 +31,7 @@ function MarkerComponent(props)
                         ...pinStyle,
                         transform: `translate(${-size / 2}px,${-size}px)`
                         }}
-                        // TODO: handle onClick
+                        onClick={() => props.handleMarkerClick(marker.id, [marker.longitude, marker.latitude])}
                     >
                         <path d={ICON} />
                     </svg>

@@ -5,6 +5,7 @@ import ReactMapGl, { setRTLTextPlugin } from 'react-map-gl';
 import * as mapActions from './../../redux/actions/Map/actions';
 import * as formActions from './../../redux/actions/AddForm/actions';
 import MarkerContainer from '../Marker/MarkerContainer';
+import PopupContainer from '../Popup/PopupContainer';
 
 const TOKEN = process.env.REACT_APP_TOKEN;
 const STYLE = process.env.REACT_APP_STYLE;
@@ -61,9 +62,10 @@ class Map extends Component{
                 {...this.state.viewport}
                 getCursor={() => 'default'}
                 onViewportChange={ viewport => this.setViewport(viewport) }
-                onClick={(e) => this.handleMapClick(e.lngLat) }
+                onClick={(e) => this.props.popup.isOpen ? this.props.setPopupAction(false) : this.handleMapClick(e.lngLat) }
             >
                 <MarkerContainer />
+                <PopupContainer />
             </ReactMapGl>
         )
     }
@@ -73,6 +75,7 @@ const mapStateToProps = state => {
     return {
         form: state.addForm,
         user: state.user,
+        popup: state.map.popup,
     }
 }
 

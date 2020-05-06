@@ -4,6 +4,7 @@ export const GET_DATA = 'GET_DATA';
 export const SET_CENTER = 'SET_CENTER';
 export const SET_ZOOM = 'SET_ZOOM';
 export const SET_WIDTH = 'SET_WIDTH';
+export const SET_POPUP = 'SET_POPUP';
 
 export const getDataAction = (token) => async dispatch => {
     
@@ -38,5 +39,12 @@ export const setWidthAction = (width) => dispatch => {
     dispatch({
         type: SET_WIDTH,
         payload: width,
+    })
+}
+
+export const setPopupAction = (isOpen, id = null, lngLat = []) => dispatch => {
+    dispatch({
+        type: SET_POPUP,
+        payload: {isOpen, id, lngLat},
     })
 }
