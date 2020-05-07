@@ -10,7 +10,7 @@ export const registerAction = data => async dispatch => {
         // TODO: check result before dispatching
         await dispatch({
             type: REGISTER,
-            payload: res.data, // TODO: make sure you have the same result from api
+            payload: res.data,
         });
 
         return res;

@@ -55,7 +55,7 @@ export async function addEntry(body, token)
             , body
             , {
                 headers: {
-                    "Authorization": 'Bearer ' + token
+                    "Authorization": 'Bearer ' + token,
                 }
             });
         return response;
@@ -67,12 +67,37 @@ export async function addEntry(body, token)
 // DELETE
 export async function deleteEntry(body, token)
 {
-    const response = await Axios.delete(`${API_URL}/api/accidents/${body.id}`, body, { headers: {'Authorization': `Basic ${token}`} });
-    return response;
+    try {
+        const response = await Axios.delete(`${API_URL}/api/accidents/${body.id}`
+            , {
+                data: {
+                    body
+                },
+                
+                headers: {
+                    "Authorization": 'Bearer ' + token,
+                }
+            });
+        return response;        
+    } catch (error) {
+        console.log('[e] api -> error:', error);
+        return error;
+    }
 }
 // PUT
 export async function editEntry(body, token)
 {
-    const response = await Axios.put(`${API_URL}/api/accidents/`, body, { headers: {'Authorization': `Basic ${token}`} });
-    return response;
+    try {
+        const response = await Axios.put(`${API_URL}/api/accidents/`
+            , body
+            , {
+                headers: {
+                    "Authorization": 'Bearer ' + token,
+                }
+            });
+        return response;
+    } catch (error) {
+        console.log('[e] api -> error:', error);
+        return error;
+    }
 }

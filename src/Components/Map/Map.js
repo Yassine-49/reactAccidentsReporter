@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ReactMapGl, { setRTLTextPlugin } from 'react-map-gl';
 
 import * as mapActions from './../../redux/actions/Map/actions';
-import * as formActions from './../../redux/actions/AddForm/actions';
+import * as formActions from './../../redux/actions/Form/actions';
 import MarkerContainer from '../Marker/MarkerContainer';
 import PopupContainer from '../Popup/PopupContainer';
 
@@ -19,30 +19,11 @@ setRTLTextPlugin(
 
 class Map extends Component{
 
-    constructor(props)
-    {
-        super(props);
-        this.state = {
-            viewport: {
-                width: 900,
-                height: 600,
-                latitude: 32.3008,
-                longitude: -9.2272,
-                zoom: 12,
-                maxZoom: 17,
-                minZoom: 2,
-            }
-        }
+    _setViewport = viewport => {
+        this.props.setViewportAction(viewport);
     }
 
-    setViewport = viewport => {
-        this.setState({
-            viewport
-        })
-    }
-
-    handleMapClick = lngLat => {
-        console.log('lngLat:', lngLat);
+    _handleMapClick = lngLat => {
         if(this.props.user.isLoggedIn)
         {
             this.props.setDataAction({
@@ -51,7 +32,6 @@ class Map extends Component{
             });
             this.props.openDialogAction();
         }
-        //console.log(this.props.user.isLoggedIn ? this.props.openDialogAction() : 'not logged in!')
     }
 
     render()
@@ -59,10 +39,10 @@ class Map extends Component{
         return(
             <ReactMapGl mapboxApiAccessToken={TOKEN}
                 mapStyle={STYLE}
-                {...this.state.viewport}
+                {...this.props.viewport}
                 getCursor={() => 'default'}
-                onViewportChange={ viewport => this.setViewport(viewport) }
-                onClick={(e) => this.props.popup.isOpen ? this.props.setPopupAction(false) : this.handleMapClick(e.lngLat) }
+                onViewportChange={ viewport => this._setViewport(viewport) }
+                onClick={(e) => this.props.popup.isOpen ? this.props.setPopupAction(false) : this._handleMapClick(e.lngLat) }
             >
                 <MarkerContainer />
                 <PopupContainer />
@@ -73,7 +53,8 @@ class Map extends Component{
 
 const mapStateToProps = state => {
     return {
-        form: state.addForm,
+        viewport: state.map.viewport,
+        form: state.form,
         user: state.user,
         popup: state.map.popup,
     }

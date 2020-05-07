@@ -1,6 +1,16 @@
 import * as actions from './../../actions/Map/actions';
 
-const initState = {    
+const initState = {
+    // viewport:
+    viewport: {
+        width: 900,
+        height: 600,
+        latitude: 32.3008,
+        longitude: -9.2272,
+        zoom: 12,
+        maxZoom: 17,
+        minZoom: 2,
+    },
     // markers:
     markers: [],
     // popup:
@@ -21,18 +31,15 @@ const mapReducer = (state = initState, action) => {
                 ...state,
                 markers: action.payload,
             }
-            // TODO: test what's below
-        case actions.SET_CENTER:
+        case actions.SET_VIEWPORT:
             return{
                 ...state,
-                [state.viewport.latitude]: action.payload[1],
-                [state.viewport.longitude]: action.payload[0],
+                viewport: {
+                    ...state.viewport,
+                    ...action.payload,
+                },
             }
-        case actions.SET_ZOOM:
-            return{
-                ...state,
-                [state.viewport.zoom]: action.payload,
-            }
+        // TODO: check this when working responsive map
         case actions.SET_WIDTH:
             return{
                 ...state,

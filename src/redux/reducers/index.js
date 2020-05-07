@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 
-import navigationReducer from './Navigation/reducer';
 import mapReducer from './Map/reducer';
-import addFormReducer from './AddForm/reducer';
+import formReducer from './Form/reducer';
 import userReducer from './User/reducer';
 
 const rootReducer = combineReducers({
-    navigation: navigationReducer,
     map: mapReducer,
-    addForm: addFormReducer,
+    form: formReducer,
     user: userReducer,
 });
 

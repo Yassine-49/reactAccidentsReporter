@@ -1,4 +1,4 @@
-import * as actions from './../../actions/AddForm/actions';
+import * as actions from './../../actions/Form/actions';
 
 const initState = {
     // data:
@@ -18,7 +18,7 @@ const initState = {
     errors: null,
 }
 
-const addFormReducer = (state = initState, action) => {
+const formReducer = (state = initState, action) => {
     switch (action.type) {
         case actions.OPEN_DIALOG:
             return{
@@ -29,13 +29,6 @@ const addFormReducer = (state = initState, action) => {
             return{
                 ...state,
                 isOpen: action.payload,
-            }
-        case actions.SET_DATA:
-            return{
-                ...state,
-                data: { ...state.data,
-                    ...action.payload
-                },
             }
         case actions.POST_FORM:
             return{
@@ -48,4 +41,4 @@ const addFormReducer = (state = initState, action) => {
     }
 }
 
-export default addFormReducer;
+export default formReducer;

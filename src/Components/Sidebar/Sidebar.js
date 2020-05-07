@@ -1,20 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import {
     List,
     ListItem,
     ListItemText,
-    ListItemIcon,
+    ListItemAvatar,
+    Avatar,
+    Typography,
     Divider,
+    ListItemSecondaryAction,
+    IconButton,
 } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import useStyles from './styles';
-
-import history from '../../Helpers/history';
 
 function Sidebar(props)
 {
@@ -22,35 +22,59 @@ function Sidebar(props)
 
     return(
         <div className={classes.drawerContainer}>
-          <List>
-                <ListItem button key={'main'}
-                    onClick={() => history.push('/') }
-                >
-                    <ListItemIcon> <HomeIcon /> </ListItemIcon>
-                    <ListItemText primary={'Main'} />
-                </ListItem>
-                <ListItem button key={'register'}
-                    onClick={() => history.push('/register') }
-                >
-                    <ListItemIcon> <SupervisorAccountIcon /> </ListItemIcon>
-                    <ListItemText primary={'Register'} />
-                </ListItem>
-                <ListItem button key={'login'}
-                    onClick={() => history.push('/login') }
-                >
-                    <ListItemIcon> <PersonIcon /> </ListItemIcon>
-                    <ListItemText primary={'Login'} />
+            <List>
+                <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                        <Avatar alt={props.user.username}
+                            children={ props.user.username[0] || 'G'}
+                            className={classes.avatarColor} />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={props.user.username || 'Guest'}
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    component="span"
+                                    variant="caption"
+                                    color="textPrimary"
+                                >
+                                    {props.user.email || 'example@email.com'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
                 </ListItem>
             </List>
             <Divider />
+            <Typography variant="h6" color="inherit" className={classes.listTitle}>
+                Markers:
+            </Typography>
+            <List dense>
+                {
+                    props.markers.length > 0
+                    ? props.markers.map(marker => (
+                        <ListItem button
+                            key={marker.id}
+                            onClick={() => props.handleItemClick([marker.longitude, marker.latitude]) }
+                        >
+                            <ListItemText primary={marker.title} />
+                            <ListItemSecondaryAction>
+                                <IconButton aria-label="edit" onClick={() => props.handleEditClick(marker.id)}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton edge="end" aria-label="delete" onClick={() => props.handleDeleteClick(marker.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    ))
+                    : <Typography variant="body1" color="inherit" className={classes.listTitle}>
+                        Login to see markers!
+                    </Typography>
+                }
+            </List>
         </div>
     )
 }
 
-const mapStateToProps = state => {
-    return{
-        user: state.user,
-    }
-}
-
-export default connect(mapStateToProps, {})(Sidebar);
+export default Sidebar;

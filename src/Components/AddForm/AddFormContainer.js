@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import AddForm from './AddForm';
-import * as formActions from './../../redux/actions/AddForm/actions';
+import * as formActions from './../../redux/actions/Form/actions';
 import * as mapActions from './../../redux/actions/Map/actions';
 
 class AddFormContainer extends Component{
@@ -36,7 +36,7 @@ class AddFormContainer extends Component{
 
 const mapStateToProps = state => {
     return{
-        form: state.addForm,
+        form: state.form,
         user: state.user,
     }
 }
