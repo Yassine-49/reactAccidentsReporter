@@ -26,8 +26,8 @@ export default function AddForm(props)
             onClose={props.handleClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">{props.marker ? 'Edit:' : 'Add new:'}</DialogTitle>
-            <form onSubmit={(e) => props.handleSaveButton(e, values)}>
+            <DialogTitle id="form-dialog-title">{props.id ? 'Edit:' : 'Add new:'}</DialogTitle>
+            <form onSubmit={(e) => props.id ? props. handleEditButton(e, { id: props.id, ...values }) : props.handleSaveButton(e, values)}>
                 <DialogContent>
                     <TextField
                         margin="dense"
@@ -71,17 +71,11 @@ export default function AddForm(props)
                     />
                 </DialogContent>
                 <DialogActions>
-                    {props.marker ?
-                    <Button onClick={() => props.handleDelete(props.marker.id)} color="secondary">
-                        Delete
-                    </Button>
-                    : null
-                    }
                     <Button onClick={props.handleCancelButton} color="primary">
                         Cancel
                     </Button>
                     <Button type="submit" color="primary">
-                        Save
+                        { props.id ? 'Edit' : 'Save' }
                     </Button>
                 </DialogActions>
             </form>

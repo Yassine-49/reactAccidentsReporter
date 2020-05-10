@@ -20,6 +20,15 @@ class AddFormContainer extends Component{
         this.props.closeDialogAction();
     }
 
+    _handleEditButton = async (e, values) => {
+        e.preventDefault();
+        const res = await this.props.updateFormAction(values, this.props.user.token);
+        console.log('res:', res);
+        // TODO: handle error
+        await this.props.getDataAction(this.props.user.token);
+        this.props.closeDialogAction();
+    }
+
     render()
     {
         return(
@@ -27,8 +36,10 @@ class AddFormContainer extends Component{
             this.props.form.isOpen
                 ? <AddForm open={this.props.form.isOpen}
                     values={this.props.form.data}
+                    id={this.props.form.data.id}
                     handleCancelButton={this._handleCancelButton}
-                    handleSaveButton={this._handleSaveButton} />
+                    handleSaveButton={this._handleSaveButton}
+                    handleEditButton={this._handleEditButton} />
                 : null
         )
     }

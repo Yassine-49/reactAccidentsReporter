@@ -19,6 +19,7 @@ import useStyles from './styles';
 function Sidebar(props)
 {
     const classes = useStyles();
+    console.log('marker:', props.markers);
 
     return(
         <div className={classes.drawerContainer}>
@@ -59,7 +60,7 @@ function Sidebar(props)
                         >
                             <ListItemText primary={marker.title} />
                             <ListItemSecondaryAction>
-                                <IconButton aria-label="edit" onClick={() => props.handleEditClick(marker.id)}>
+                                <IconButton aria-label="edit" onClick={() => props.handleEditClick(marker)}>
                                     <EditIcon />
                                 </IconButton>
                                 <IconButton edge="end" aria-label="delete" onClick={() => props.handleDeleteClick(marker.id)}>
