@@ -23,13 +23,15 @@ import LoginContainer from './../../Views/Login/LoginContainer';
 
 import SidebarContainer from './../../Components/Sidebar/SidebarContainer';
 
-import * as actions from './../../redux/actions/User/actions';
+import * as userActions from './../../redux/actions/User/actions';
+import * as mapActions from './../../redux/actions/Map/actions';
 import history from '../../Helpers/history';
 
 function App(props) {
 
   const _handleLogout = () => {
     props.logoutAction();
+    props.clearDataAction();
     history.push('/login');
   }
 
@@ -86,4 +88,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { ...actions })(App);
+export default connect(mapStateToProps, { ...userActions, ...mapActions })(App);

@@ -4,6 +4,7 @@ export const GET_DATA = 'GET_DATA';
 export const SET_VIEWPORT = 'SET_VIEWPORT';
 export const SET_WIDTH = 'SET_WIDTH';
 export const SET_POPUP = 'SET_POPUP';
+export const CLEAR_DATA = 'CLEAR_DATA';
 
 export const getDataAction = (token) => async dispatch => {
     
@@ -38,5 +39,12 @@ export const setPopupAction = (isOpen, id = null, lngLat = []) => dispatch => {
     dispatch({
         type: SET_POPUP,
         payload: {isOpen, id, lngLat},
+    });
+}
+
+export const clearDataAction = () => dispatch => {
+    dispatch({
+        type: CLEAR_DATA,
+        payload: null,
     });
 }

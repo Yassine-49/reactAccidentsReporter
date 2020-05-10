@@ -55,6 +55,11 @@ const mapReducer = (state = initState, action) => {
                     longitude: action.payload.lngLat[0],
                 }
             }
+        case actions.CLEAR_DATA:
+            return{
+                ...state,
+                markers: [],
+            }
         default:
             return state;
     }
