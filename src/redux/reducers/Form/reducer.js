@@ -4,8 +4,8 @@ const initState = {
     // data:
     data: {
         id: null,
-        title: '',
-        description: '',
+        title: 'shit',
+        description: 'shit is real',
         numberOfInjuries: 0,
         isResolved: false,
         latitude: null,
@@ -48,6 +48,16 @@ const formReducer = (state = initState, action) => {
                     latitude: action.payload.latitude,
                     longitude: action.payload.longitude,
                 }
+            }
+        case actions.SET_ERRORS:
+            return{
+                ...state,
+                errors: action.payload,
+            }
+        case actions.CLEAR_ERRORS:
+            return{
+                ...state,
+                errors: null,
             }
     
         default:

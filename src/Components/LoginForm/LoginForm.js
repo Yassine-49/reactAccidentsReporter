@@ -31,7 +31,7 @@ const LoginForm = (props) => {
                 onSubmit={ async (data) => {
                     try {
                         const res = await props.handleLogin(data);
-                        loginError = `*${res.data.message}`;
+                        loginError = `*${res}`;
                     } catch (error) {
                         loginError = `*${error}`;
                     }
@@ -46,8 +46,7 @@ const LoginForm = (props) => {
                         handleBlur,
                         errors,
                         touched,
-                    }
-                    )=>(
+                    }) => (
                         <form onSubmit={handleSubmit}>
                             <TextField className={classes.TextField}
                                 id="username"

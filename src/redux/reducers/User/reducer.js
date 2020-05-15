@@ -5,6 +5,7 @@ const initState = {
     username: '',
     token: '',
     isLoggedIn: false,
+    errors: null,
 }
 
 const userReducer = (state = initState, action) => {
@@ -15,6 +16,7 @@ const userReducer = (state = initState, action) => {
                 username: action.payload.username,
                 token: action.payload.token,
                 isLoggedIn: true,
+                errors: action.payload.message,
             }
         case actions.LOGIN:
             return{
@@ -22,6 +24,7 @@ const userReducer = (state = initState, action) => {
                 username: action.payload.username,
                 token: action.payload.token,
                 isLoggedIn: true,
+                errors: action.payload.message,
             }
         case actions.LOGOUT:
             return{
@@ -29,6 +32,16 @@ const userReducer = (state = initState, action) => {
                 username: '',
                 token: '',
                 isLoggedIn: false,
+            }
+        case actions.SET_USER_ERRORS:
+            return{
+                ...state,
+                errors: action.payload,
+            }
+        case actions.CLEAR_USER_ERRORS:
+            return{
+                ...state,
+                errors: null,
             }
     
         default:

@@ -11,19 +11,15 @@ class AddFormContainer extends Component{
         this.props.closeDialogAction();
     }
 
-    _handleSaveButton = async (e, values) => {
-        e.preventDefault();
-        const res = await this.props.postFormAction(values, this.props.user.token);
-        console.log('res:', res);
+    _handleSaveButton = async (values) => {
+        await this.props.postFormAction(values, this.props.user.token);
         // TODO: handle error
         await this.props.getDataAction(this.props.user.token);
         this.props.closeDialogAction();
     }
 
-    _handleEditButton = async (e, values) => {
-        e.preventDefault();
-        const res = await this.props.updateFormAction(values, this.props.user.token);
-        console.log('res:', res);
+    _handleEditButton = async (values) => {
+        await this.props.updateFormAction(values, this.props.user.token);
         // TODO: handle error
         await this.props.getDataAction(this.props.user.token);
         this.props.closeDialogAction();

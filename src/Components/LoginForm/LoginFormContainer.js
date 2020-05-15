@@ -16,12 +16,13 @@ class LoginFormContainer extends Component{
 
     async _handleLogin(user) {
         const res = await this.props.loginAction(user);
-        if(!res.data.message)
+        if(res.status === 200)
+        {
             history.push('/');
-
-        const response = await this.props.getDataAction(this.props.user.token);
-
-        return res;
+            await this.props.getDataAction(this.props.user.token);
+            return res;
+        }
+        return 'error';
     }
 
     _handleRegister()

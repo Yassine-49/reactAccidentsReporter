@@ -27,9 +27,7 @@ class SidebarContainer extends Component{
     }
     
     _deleteMarker = async () => {
-        console.log('delete:', this.props.dialog.id);
-        const res = await this.props.deleteItemAction({ id: this.props.dialog.id }, this.props.user.token);
-        console.log('res:', res);
+        await this.props.deleteItemAction({ id: this.props.dialog.id }, this.props.user.token);
         // TODO: handle error
         await this.props.getDataAction(this.props.user.token);
     }

@@ -11,7 +11,7 @@ class MarkerContainer extends Component{
     }
 
     render()
-    {
+    {   
         return(
             <MarkerComponent markers={this.props.markers} handleMarkerClick={this._handleMarkerClick} />
         )

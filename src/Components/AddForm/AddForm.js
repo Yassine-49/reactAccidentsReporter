@@ -1,4 +1,7 @@
 import React from 'react';
+import * as yup from 'yup';
+import { Formik } from 'formik';
+
 import {
     Dialog,
     DialogTitle,
@@ -10,75 +13,107 @@ import {
     Button
 } from '@material-ui/core';
 
+const entrySchema = yup.object().shape({
+    title: yup.string().required('marker must have a title'),
+    description: yup.string().required('please be kind enough to provide a description.'),
+    numberOfInjuries: yup.number(),
+    isResolved: yup.boolean(),
+});
+
 export default function AddForm(props)
 {
-    const [values, setValues] = React.useState({
-        title: props.values ? props.values.title : 'Enter a Title',
-        description: props.values ? props.values.description : 'Enter a Description',
-        numberOfInjuries: props.values ? props.values.numberOfInjuries : 0,
-        isResolved: props.values ? props.values.isResolved : false,
-        latitude: props.values ? props.values.latitude : null,
-        longitude: props.values ? props.values.longitude : null,
-    });
-    
     return(
-        <Dialog open={props.open}
-            onClose={props.handleClose}
-            aria-labelledby="form-dialog-title"
-        >
-            <DialogTitle id="form-dialog-title">{props.id ? 'Edit:' : 'Add new:'}</DialogTitle>
-            <form onSubmit={(e) => props.id ? props. handleEditButton(e, { id: props.id, ...values }) : props.handleSaveButton(e, values)}>
-                <DialogContent>
-                    <TextField
-                        margin="dense"
-                        id="title"
-                        label="Title"
-                        defaultValue={values.title}
-                        variant="outlined"
-                        onInput={e => setValues({...values, title: e.target.value})}
-                        fullWidth
-                    />
-                    <TextField
-                        margin="dense"
-                        id="description"
-                        label="Description"
-                        defaultValue={values.description}
-                        variant="outlined"
-                        onInput={e => setValues({...values, description: e.target.value})}
-                        multiline
-                        fullWidth
-                    />
-                    <TextField
-                        margin="dense"
-                        id="numberOfInjuries"
-                        label="Number of injuries"
-                        defaultValue={values.numberOfInjuries}
-                        variant="outlined"
-                        onInput={e => setValues({...values, numberOfInjuries: e.target.value})}
-                        fullWidth
-                    />
-                    <FormControlLabel
-                        control={
-                        <Checkbox
-                            id="isResolved"
-                            checked={values.isResolved}
-                            name="isChecked"
-                            color="secondary"
-                            onChange={e => setValues({...values, isResolved: e.target.checked})}
-                        />
-                        }
-                        label="Resolved"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={props.handleCancelButton} color="primary">
-                        Cancel
-                    </Button>
-                    <Button type="submit" color="primary">
-                        { props.id ? 'Edit' : 'Save' }
-                    </Button>
-                </DialogActions>
-            </form>
-        </Dialog>
+            <Formik
+                initialValues={{
+                    title: props.values ? props.values.title : 'Enter a Title',
+                    description: props.values ? props.values.description : 'Enter a Description',
+                    numberOfInjuries: props.values ? props.values.numberOfInjuries : 0,
+                    isResolved: props.values ? props.values.isResolved : false,
+                    latitude: props.values ? props.values.latitude : null,
+                    longitude: props.values ? props.values.longitude : null,
+                }}
+                onSubmit={
+                    data => props.id ? props. handleEditButton({ id: props.id, ...data }) : props.handleSaveButton(data)
+                }
+                validationSchema={entrySchema}
+            >
+                {
+                    ({
+                        values,
+                        handleChange,
+                        handleSubmit,
+                        handleBlur,
+                        errors,
+                        touched,
+                    }) => (
+                        <Dialog open={props.open}
+                            onClose={props.handleClose}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">{props.id ? 'Edit:' : 'Add new:'}</DialogTitle>
+                        <form onSubmit={ handleSubmit }>
+                            <DialogContent>
+                                <TextField
+                                    margin="dense"
+                                    id="title"
+                                    label="Title"
+                                    helperText={ errors.title && touched.title ? `*${errors.title}` : '' }
+                                    defaultValue={values.title}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={ errors.title && touched.title }
+                                    fullWidth
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="description"
+                                    label="Description"
+                                    helperText={ errors.description && touched.description ? `*${errors.description}` : '' }
+                                    defaultValue={values.description}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={ errors.description && touched.description }
+                                    multiline
+                                    fullWidth
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="numberOfInjuries"
+                                    label="Number of injuries"
+                                    defaultValue={values.numberOfInjuries}
+                                    variant="outlined"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    fullWidth
+                                />
+                                <FormControlLabel
+                                    control={
+                                    <Checkbox
+                                        id="isResolved"
+                                        checked={values.isResolved}
+                                        name="isChecked"
+                                        color="secondary"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    />
+                                    }
+                                    label="Resolved"
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={props.handleCancelButton} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button type="submit" color="primary">
+                                    { props.id ? 'Edit' : 'Save' }
+                                </Button>
+                            </DialogActions>
+                        </form>
+                </Dialog>
+                    )
+                }
+            </Formik>
     )
 }

@@ -19,85 +19,58 @@ export async function register(body)
 
 export async function login(body)
 {
-    try{
-        const response = await Axios.post(`${API_URL}/users/signin`, body);
-        return response;
-    } catch(error)
-    {
-        console.log('[e] api -> error:', error);
-        return error;
-    }
+    const response = await Axios.post(`${API_URL}/users/signin`, body);
+    return response;
 }
 
 // Data routes
 // GET
 export async function gettEntries(token)
 {
-    try{
-        const response = await Axios.get(`${API_URL}/api/accidents`
-            , {
-                headers: {
-                    "Authorization": 'Bearer ' + token,
-                }
-            });
-        return response;
-    } catch(error)
-    {
-        console.log('[e] api -> error:', error);
-        return error;
-    }
+    const response = await Axios.get(`${API_URL}/api/accidents`
+        , {
+            headers: {
+                "Authorization": 'Bearer ' + token,
+            }
+        });
+    return response;
 }
 // POST
 export async function addEntry(body, token)
 {
-    try {
-        const response = await Axios.post(`${API_URL}/api/accidents`
-            , body
-            , {
-                headers: {
-                    "Authorization": 'Bearer ' + token,
-                }
-            });
-        return response;
-    } catch (error) {
-        console.log('[e] api -> error:', error);
-        return error;
-    }
+    const response = await Axios.post(`${API_URL}/api/accidents`
+        , body
+        , {
+            headers: {
+                "Authorization": 'Bearer ' + token,
+            }
+        });
+    return response;
 }
 // DELETE
 export async function deleteEntry(body, token)
 {
-    try {
-        const response = await Axios.delete(`${API_URL}/api/accidents/${body.id}`
-            , {
-                data: {
-                    body
-                },
-                
-                headers: {
-                    "Authorization": 'Bearer ' + token,
-                }
-            });
-        return response;        
-    } catch (error) {
-        console.log('[e] api -> error:', error);
-        return error;
-    }
+    const response = await Axios.delete(`${API_URL}/api/accidents/${body.id}`
+        , {
+            data: {
+                body
+            },
+            
+            headers: {
+                "Authorization": 'Bearer ' + token,
+            }
+        });
+    return response;
 }
 // PUT
 export async function editEntry(body, token)
 {
-    try {
-        const response = await Axios.put(`${API_URL}/api/accidents/`
-            , body
-            , {
-                headers: {
-                    "Authorization": 'Bearer ' + token,
-                }
-            });
-        return response;
-    } catch (error) {
-        console.log('[e] api -> error:', error);
-        return error;
-    }
+    const response = await Axios.put(`${API_URL}/api/accidents/`
+        , body
+        , {
+            headers: {
+                "Authorization": 'Bearer ' + token,
+            }
+        });
+    return response;
 }
