@@ -89,17 +89,16 @@ export default function AddForm(props)
                                     fullWidth
                                 />
                                 <FormControlLabel
-                                    control={
-                                    <Checkbox
-                                        id="isResolved"
-                                        checked={values.isResolved}
-                                        name="isChecked"
-                                        color="secondary"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                    />
-                                    }
+                                    id="isResolved"
                                     label="Resolved"
+                                    control={
+                                        <Checkbox checked={values.isResolved}
+                                            name="isResolved"
+                                            color="secondary"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    }
                                 />
                             </DialogContent>
                             <DialogActions>
