@@ -33,7 +33,11 @@ export default function AddForm(props)
                     longitude: props.values ? props.values.longitude : null,
                 }}
                 onSubmit={
-                    data => props.id ? props. handleEditButton({ id: props.id, ...data }) : props.handleSaveButton(data)
+                    data => (
+                            props.id
+                            ? props.handleEditButton({ id: props.id, ...data })
+                            : props.handleSaveButton(data)
+                        )
                 }
                 validationSchema={entrySchema}
             >

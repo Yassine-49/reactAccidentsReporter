@@ -41,7 +41,6 @@ export const loginAction = user => async dispatch => {
 
     try{
         res = await API.login(user);
-        // TODO: check result before dispatching
         await dispatch({
             type: LOGIN,
             payload: res.data,
@@ -60,10 +59,10 @@ export const loginAction = user => async dispatch => {
             type: SET_USER_ERRORS,
             payload: {
                 name: error.name,
-                message: error.message,
+                message: error.response ? error.response.statusText : error.message,
             }
         });
-        return error.name;
+        return error.response ? error.response.statusText : error.message;
     }
 }
 

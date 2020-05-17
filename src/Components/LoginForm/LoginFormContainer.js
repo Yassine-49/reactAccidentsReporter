@@ -22,7 +22,7 @@ class LoginFormContainer extends Component{
             await this.props.getDataAction(this.props.user.token);
             return res;
         }
-        return 'error';
+        return res;
     }
 
     _handleRegister()

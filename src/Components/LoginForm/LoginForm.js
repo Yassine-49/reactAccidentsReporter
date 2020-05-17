@@ -6,7 +6,6 @@ import {
     Container,
     TextField,
     Button,
-    Typography,
 } from '@material-ui/core';
 import { useStyles } from './styles';
 
@@ -18,7 +17,6 @@ const loginSchema = yup.object().shape({
 const LoginForm = (props) => {
 
     const classes = useStyles();
-    let loginError = '';
 
     return(
         <Fragment>
@@ -30,10 +28,9 @@ const LoginForm = (props) => {
                 }}
                 onSubmit={ async (data) => {
                     try {
-                        const res = await props.handleLogin(data);
-                        loginError = `*${res}`;
+                        await props.handleLogin(data);
                     } catch (error) {
-                        loginError = `*${error}`;
+                        console.log('error:', error);
                     }
                 }}
                 validationSchema={loginSchema}
@@ -79,12 +76,6 @@ const LoginForm = (props) => {
                                     onClick={props.handleRegister}
                                     variant="outlined">Register</Button>
                             </div>
-                            <Typography className={classes.ErrorText}
-                                variant="caption"
-                                color="error"
-                                display="block">
-                                { loginError }
-                            </Typography>
                         </form>
                     )
                 }
