@@ -29,6 +29,14 @@ class LoginFormContainer extends Component{
     {
         history.push('/register');
     }
+    
+    async componentWillMount() {
+        if(this.props.user.isLoggedIn)
+        {
+            await this.props.getDataAction(this.props.user.token);
+            history.push('/');
+        }
+    }
 
     render()
     {

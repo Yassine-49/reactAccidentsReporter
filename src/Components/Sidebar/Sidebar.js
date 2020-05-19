@@ -26,7 +26,7 @@ function Sidebar(props)
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                         <Avatar alt={props.user.username}
-                            children={ props.user.username[0] || 'G'}
+                            children={ (props.user.username && props.user.username[0]) || 'G'}
                             className={classes.avatarColor} />
                     </ListItemAvatar>
                     <ListItemText

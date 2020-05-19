@@ -37,6 +37,9 @@ function App(props) {
 
   const classes = useStyles();
 
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+  const userTime = localStorage.getItem('userTime') ? JSON.parse(localStorage.getItem('userTime')) : null;
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -46,6 +49,9 @@ function App(props) {
           <Typography className={classes.title} variant="h6" noWrap>
             My App
           </Typography>
+          {
+            !props.user.isLoggedIn && ((Date.now() - userTime) < (15 * 60 * 1000)) && props.setLocalUserAction(user)
+          }
           {
             !props.user.isLoggedIn
             ? <Button color="inherit" onClick={ () => history.push('/login') }>Login</Button>

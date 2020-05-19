@@ -43,6 +43,14 @@ const userReducer = (state = initState, action) => {
                 ...state,
                 errors: null,
             }
+        case actions.SET_LOCALSTORAGE:
+            return{
+                ...state,
+                email: action.payload.email,
+                username: action.payload.username,
+                token: action.payload.token,
+                isLoggedIn: true,
+            }
     
         default:
             return state;

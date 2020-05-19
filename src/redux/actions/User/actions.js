@@ -5,11 +5,11 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SET_USER_ERRORS = 'SET_USER_ERRORS';
 export const CLEAR_USER_ERRORS = 'CLEAR_USER_ERRORS';
+export const SET_LOCALSTORAGE = 'SET_LOCALSTORAGE';
 
 export const registerAction = data => async dispatch => {
     try{
         const res = await API.register(data);
-        // TODO: check result before dispatching
         await dispatch({
             type: REGISTER,
             payload: res.data,
@@ -52,6 +52,8 @@ export const loginAction = user => async dispatch => {
                 message: res.data.message,
             }
         });
+        localStorage.setItem('user', JSON.stringify(res.data));
+        localStorage.setItem('userTime', Date.now());
         return res;
     } catch(error)
     {
@@ -67,6 +69,7 @@ export const loginAction = user => async dispatch => {
 }
 
 export const logoutAction = () => dispatch => {
+    localStorage.removeItem('user');
     dispatch({
         type: LOGOUT,
         payload: false,
@@ -79,4 +82,19 @@ export const clearUserErrorsAction = () => dispatch => {
         type: CLEAR_USER_ERRORS,
         payload: null,
     });
+}
+
+export const setLocalUserAction = user => dispatch => {
+    dispatch({
+        type: SET_LOCALSTORAGE,
+        payload: user,
+    });
+    dispatch({
+        type: SET_USER_ERRORS,
+        payload: {
+            name: 'success',
+            message: user.message,
+        }
+    });
+    return 1;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './../../redux/actions/User/actions';
+import * as userActions from './../../redux/actions/User/actions';
+import * as mapActions from './../../redux/actions/Map/actions';
 
 import RegisterForm from './RegisterForm';
 import history from './../../Helpers/history';
@@ -26,6 +27,14 @@ class RegisterFormContainer extends Component{
         history.push('/login');
     }
 
+    async componentWillMount() {
+        if(this.props.user.isLoggedIn)
+        {
+            await this.props.getDataAction(this.props.user.token);
+            history.push('/');
+        }
+    }
+
     render()
     {
         return(
@@ -36,7 +45,8 @@ class RegisterFormContainer extends Component{
 
 const mapStateToProps = state => {
     return{
+        user: state.user,
     }
 }
 
-export default connect(mapStateToProps, { ...actions })(RegisterFormContainer);
+export default connect(mapStateToProps, { ...userActions, ...mapActions })(RegisterFormContainer);
