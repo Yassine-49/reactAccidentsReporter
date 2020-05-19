@@ -37,6 +37,7 @@ function App(props) {
 
   const classes = useStyles();
 
+  // Get user info from local storage
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
   const userTime = localStorage.getItem('userTime') ? JSON.parse(localStorage.getItem('userTime')) : null;
 

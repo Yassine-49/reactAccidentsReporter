@@ -3,8 +3,8 @@ import * as actions from './../../actions/Map/actions';
 const initState = {
     // viewport:
     viewport: {
-        width: 900,
-        height: 600,
+        width: '100%',
+        height: '100%',
         latitude: 32.3008,
         longitude: -9.2272,
         zoom: 12,
@@ -38,12 +38,6 @@ const mapReducer = (state = initState, action) => {
                     ...state.viewport,
                     ...action.payload,
                 },
-            }
-        // TODO: check this when working responsive map
-        case actions.SET_WIDTH:
-            return{
-                ...state,
-                [state.viewport.width]: action.payload,
             }
         case actions.SET_POPUP:
             return{
